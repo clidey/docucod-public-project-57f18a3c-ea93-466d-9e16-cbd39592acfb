@@ -3,4 +3,296 @@ title: "Configure Key Site Settings"
 description: "Walk through the essential site configuration options—such as site metadata, branding, and basic customizations—to personalize the portfolio to match your style or requirements."
 ---
 
-*This page will automatically be generated from the codebase*
+# Configure Key Site Settings
+
+## Purpose & Positioning
+
+This guide helps you personalize your Astro-based portfolio website by configuring essential site settings. You'll learn how to update site metadata, set branding elements, adjust build outputs, and enable critical integrations such as MDX support, sitemap generation, and robots.txt directives. The goal is to tailor your portfolio's core configuration to reflect your style, improve SEO, and ensure smooth deployment.
+
+Configuring these core settings is the foundation for a professional, optimized site that is ready to showcase your projects, blog posts, and personal brand effectively.
+
+---
+
+## Why Configure Key Site Settings?
+
+- **Central control over site behavior:** Easily manage URLs, metadata, and build outputs from one place.
+- **Ensure SEO readiness:** Automatically include your blog URLs in the sitemap and control search engine crawling.
+- **Support rich content:** Enable MDX for embedding React components inside your Markdown posts.
+- **Prepare for seamless deployment:** Integrate with deployment adapters like Netlify effortlessly.
+- **Facilitate automated management:** Use file system scanning to keep sitemap entries current with your content.
+
+---
+
+## Prerequisites
+
+- Completed installation of the portfolio site and its dependencies.
+- Basic understanding of your project's folder structure.
+- Access to the `astro.config.mjs` configuration file in your project root.
+- Some blog posts or content pages created under `src/content/blog` or similar directories.
+
+---
+
+## Expected Outcome
+
+By following this guide, you will:
+
+- Have a fully configured `astro.config.mjs` file tailored for your site.
+- Automatically generate sitemaps including all your blog posts.
+- Set up robots.txt to control crawler access.
+- Enable MDX support for advanced markdown content.
+- Configure build output and deployment adapter settings.
+
+---
+
+## Time Estimate
+
+Approximately 15-30 minutes depending on familiarity with Astro and Node.js environment.
+
+---
+
+## Step-by-Step Instructions
+
+### 1. Locate and Open `astro.config.mjs`
+
+Your portfolio’s central configuration lives in `astro.config.mjs`. Open this file in your code editor.
+
+#### What to Expect
+You'll see imports from Astro packages and some Node.js utilities, plus an exported configuration object.
+
+---
+
+### 2. Set Your Site URL
+
+The `site` property defines your live website URL, which ensures all generated links and sitemaps point correctly.
+
+```js
+site: 'https://yourdomain.com',
+```
+
+**Tip:** Use your production domain here to avoid broken links and SEO issues.
+
+---
+
+### 3. Define the Build Output Directory
+
+Confirm or adjust the directory where your built site will be output.
+
+```js
+outDir: './dist',
+```
+
+By default, it’s `dist/`, which works well for most deployment platforms like Netlify.
+
+---
+
+### 4. Configure Deployment Adapter
+
+Enable the adapter that packages your site for your hosting provider. For Netlify:
+
+```js
+import netlify from '@astrojs/netlify';
+
+adapter: netlify(),
+```
+
+This ensures the build outputs optimization suited to Netlify’s architecture.
+
+---
+
+### 5. Enable MDX Integration
+
+MDX allows richer blog content with embedded React or JSX components. Include the integration:
+
+```js
+import mdx from '@astrojs/mdx';
+
+integrations: [mdx(), ...],
+```
+
+This lets you write Markdown enhanced with component logic.
+
+---
+
+### 6. Dynamically Include Blog URLs in Sitemap
+
+To boost SEO, include all your blog posts automatically in the sitemap.
+
+Use Node.js functions to scan your blog folder and map filenames to URLs:
+
+```js
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const blogDir = path.join(__dirname, 'src', 'content', 'blog');
+const files = fs.readdirSync(blogDir);
+const blogUrls = files.map(file => `https://yourdomain.com/blog/${file.replace(/\.mdx?$/, '')}`);
+```
+
+Then pass these URLs to the sitemap integration:
+
+```js
+import sitemap from '@astrojs/sitemap';
+
+integrations: [
+  sitemap({
+    customPages: [
+      "https://yourdomain.com",
+      "https://yourdomain.com/blog",
+      "https://yourdomain.com/projects",
+      "https://yourdomain.com/resume",
+    ].concat(blogUrls),
+    priority: 0.5,
+    changefreq: 'monthly',
+  }),
+],
+```
+
+---
+
+### 7. Customize Robots.txt
+
+Control web crawler access to your site using the robots.txt integration:
+
+```js
+import robotsTxt from 'astro-robots-txt';
+
+integrations: [
+  robotsTxt({
+    userAgent: '*',
+    allow: '/',
+    disallow: '/admin',
+    crawlDelay: 10,
+  }),
+],
+```
+
+Adjust paths as needed to protect sensitive areas or improve crawl efficiency.
+
+---
+
+### 8. Export the Configuration
+
+Wrap all updates inside the `defineConfig` export from Astro:
+
+```js
+import { defineConfig } from 'astro/config';
+// all imports here
+
+export default defineConfig({
+  site: 'https://yourdomain.com',
+  outDir: './dist',
+  adapter: netlify(),
+  integrations: [
+    mdx(),
+    sitemap({ /* options */ }),
+    robotsTxt({ /* options */ }),
+  ],
+});
+```
+
+Save and close the file.
+
+---
+
+### 9. Build and Verify
+
+Run the build command:
+
+```bash
+npm run build
+```
+
+Confirm the output folder contains:
+- Your website static assets.
+- Generated `/sitemap.xml` reflecting your blog URLs.
+- `/robots.txt` with your crawl rules.
+
+Deploy these assets to your hosting provider.
+
+<Check>
+Verify your sitemap at `https://yourdomain.com/sitemap.xml` includes your pages and blog posts.
+</Check>
+
+---
+
+## Practical Example: Full `astro.config.mjs`
+
+```js
+import { defineConfig } from 'astro/config';
+import mdx from '@astrojs/mdx';
+import netlify from '@astrojs/netlify';
+import sitemap from '@astrojs/sitemap';
+import robotsTxt from 'astro-robots-txt';
+import path from 'path';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const blogDir = path.join(__dirname, 'src', 'content', 'blog');
+const files = fs.readdirSync(blogDir);
+const blogUrls = files.map(file => `https://yourdomain.com/blog/${file.replace(/\.mdx?$/, '')}`);
+
+export default defineConfig({
+  site: 'https://yourdomain.com',
+  outDir: './dist',
+  adapter: netlify(),
+  integrations: [
+    mdx(),
+    sitemap({
+      customPages: [
+        'https://yourdomain.com',
+        'https://yourdomain.com/blog',
+        'https://yourdomain.com/projects',
+        'https://yourdomain.com/resume',
+      ].concat(blogUrls),
+      priority: 0.5,
+      changefreq: 'monthly',
+    }),
+    robotsTxt({
+      userAgent: '*',
+      allow: '/',
+      disallow: '/admin',
+      crawlDelay: 10,
+    }),
+  ],
+});
+```
+
+---
+
+## Troubleshooting Tips
+
+- **Build fails with module not found**: Ensure all dependencies like `@astrojs/mdx`, `@astrojs/netlify`, `@astrojs/sitemap`, and `astro-robots-txt` are installed.
+- **Sitemap missing URLs**: Verify the blog folder path and file extensions match what your code scans.
+- **Robots.txt not applied**: Check the integration import and options syntax.
+- **Deployment errors**: Confirm the adapter matches your hosting provider and is correctly configured.
+
+<Warning>
+Do not hardcode URLs inside blog posts that might conflict with your configured `site` property.
+</Warning>
+
+
+## Best Practices
+
+- Keep your `site` URL updated to your live deployment domain.
+- Organize blog posts consistently under the configured blog content folder.
+- Regularly verify your sitemap and robots.txt outputs.
+- Use MDX for content requiring interactive or dynamic elements.
+- Test deployment after configuration changes to catch issues early.
+
+---
+
+## Next Steps & Related Documentation
+
+- [Deployment Guide](/configuration/deployment/deployment-guide): Take your configured site live using Netlify.
+- [Creating & Managing Blog Posts](/usage/blogging-workflow/create-blog-post): Add rich content that will be reflected in your sitemap.
+- [Customize Site Styles](/configuration/styling/customize-styles): Personalize your site's look and feel.
+- [Troubleshooting Common Setup Issues](/support/troubleshooting/common-issues): Resolve common problems related to configuration and deployment.
+
+---
+
+This configuration empowers you to build a professional and SEO-optimized portfolio site that is easy to manage and extend over time. Ready your Astro site for production by establishing these core settings as the foundation of your online presence.
