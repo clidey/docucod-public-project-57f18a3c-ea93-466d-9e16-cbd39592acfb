@@ -3,4 +3,94 @@ title: "Quick Validation Checklist"
 description: "A practical checklist to confirm your site is running as expected: navigate pages, check blog posts, view the contact form, and more. This ensures your base installation is correct before further customization."
 ---
 
-*This page will automatically be generated from the codebase*
+# Quick Validation Checklist
+
+This checklist helps you confirm that your portfolio-site installation is running correctly and that core features are functional before moving on to customization or deployment. Following these steps ensures your base site operates as expected and provides a solid foundation for your personal website.
+
+---
+
+## 1. Start Your Local Development Server
+
+If you have followed the installation instructions, launch your site locally:
+
+```bash
+pnpm run dev
+# or
+npm run dev
+# or
+yarn dev
+```
+
+- Verify the server starts without errors.
+- Confirm the local URL, usually `http://localhost:3000`, is displayed.
+
+
+## 2. Navigate Core Pages
+
+Visit the following pages in your browser one by one. These pages demonstrate your site’s default structure:
+
+- **Home/About Page**: Check it loads with a photo, introduction, and skills section.
+- **Projects Page**: Confirm your projects are listed with links and descriptions.
+- **Blog Page**: Verify the blog listing shows recent posts.
+- **Contact Form**: Open the contact form modal from the envelope icon in the top navigation and check all fields display correctly.
+
+
+## 3. Verify Blog Post Listing and Content
+
+- Click on a blog post from the blog listing page.
+- Confirm the post title, date, content body, and any images render accurately.
+- Ensure links inside blog posts work as expected.
+
+
+## 4. Check External Links and Redirects
+
+Verify project repository and demo URLs open in new tabs and correctly redirect:
+
+- Projects page contains GitHub repo links and external project URLs.
+- Confirm that any redirected URLs (such as project aliases) take you to the correct destination.
+
+
+## 5. Test Contact Form Submission Behavior
+
+- Open the contact form modal via the envelope icon in the top right.
+- Enter valid test data in the name, email, and message fields.
+- Submit the form and verify no immediate client-side errors.
+- Note: Since this uses Netlify form handling, check your deployment environment to confirm form receipt.
+
+
+## 6. Validate Site Metadata and SEO Elements
+
+- Inspect your browser tab title — it should show your site title.
+- View page source and confirm meta tags like description, author, and SEO tags are present.
+
+
+## 7. Confirm Site Responsiveness
+
+- Resize the browser window or test on different devices to confirm the layout adapts correctly.
+- Navigation and contact modal should work smoothly on mobile.
+
+
+---
+
+## Common Pitfalls and Checks
+
+- ❌ **Blank pages or 404 errors:** Verify local server is running properly and content folders have posts or projects.
+- ❌ **Broken external links:** Check project URLs and GitHub repositories are correctly configured.
+- ❌ **Contact form not submitting:** Ensure you have enabled and configured Netlify forms on the deployed site.
+- ❌ **Missing projects or posts:** Confirm content files exist in `src/content/blog` and your projects are properly listed in the frontend.
+
+
+---
+
+## Next Steps
+
+After confirming this checklist:
+
+- Proceed to [Configure Your Site](/getting-started/setup-installation/configuration-setup-basics) to customize metadata, branding, and build setup.
+- Follow the [Launching Your Site Locally](/getting-started/first-run-validation/first-successful-run) guide for deeper validation and walkthrough.
+- Review the [Troubleshooting Common Setup Issues](/getting-started/first-run-validation/common-setup-troubleshooting) if any step fails.
+
+
+<Tip>
+Maintaining a checklist early in your setup significantly reduces core issues during customization and deployment. Always validate basic functionality first.
+</Tip>
