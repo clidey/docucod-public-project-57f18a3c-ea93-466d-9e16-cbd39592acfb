@@ -3,4 +3,194 @@ title: "Deploy Your Portfolio Site"
 description: "Learn how to launch the portfolio site to a live environment. Follow this hands-on guide covering common deployment platforms, configuration of production settings, and post-launch checks to ensure your site is available to the world."
 ---
 
-*This page will automatically be generated from the codebase*
+# Deploy Your Portfolio Site
+
+Learn how to launch your Astro-powered portfolio site to a live environment. This practical guide walks you through configuring deployment settings, building your site, deploying to popular platforms like Netlify, and verifying that your website is publicly accessible and SEO-optimized.
+
+---
+
+## 1. Overview
+
+### Task Description
+This guide helps you deploy your personal website built with the portfolio-site project. It focuses on configuring production-ready settings, building your site artifacts, and publishing to a hosting platform.
+
+### Prerequisites
+- You have completed local setup and configuration of the portfolio-site.
+- Your site is functional locally with content and configuration finalized.
+- Git repository for your project is ready and connected to your hosting platform (e.g., Netlify).
+- You have access to deployment platform (Netlify account or equivalent).
+
+### Expected Outcome
+By following this guide, you will have a live, publicly accessible website served by an optimized hosting provider with automatically updated SEO essentials such as sitemap.xml and robots.txt.
+
+### Time Estimate
+15–30 minutes depending on setup and deployment familiarity.
+
+### Difficulty Level
+Beginner to Intermediate (requires basic command line and Git knowledge).
+
+---
+
+## 2. Step-by-Step Instructions
+
+### Step 1: Configure Your Site URL and Production Settings
+
+Your `astro.config.mjs` controls key deployment settings including your site’s public URL, build output directory, and integration plugins.
+
+- Open `astro.config.mjs`.
+- Ensure the `site` value is set to your live domain, for example:
+
+```js
+import { defineConfig } from 'astro/config';
+import netlify from '@astrojs/netlify';
+import mdx from '@astrojs/mdx';
+import sitemap from '@astrojs/sitemap';
+import robotsTxt from 'astro-robots-txt';
+
+export default defineConfig({
+  site: 'https://yourdomain.com',
+  output: 'server',
+  adapter: netlify(),
+  integrations: [
+    mdx(),
+    sitemap({
+      hostname: 'https://yourdomain.com',
+      // additional options if needed
+    }),
+    robotsTxt({
+      userAgent: '*',
+      allow: '/',
+      disallow: '/admin',
+      crawlDelay: 10,
+    }),
+  ],
+});
+```
+
+This configuration means:
+- Your site URL is the production domain.
+- Site builds with Netlify adapter for deployment to Netlify.
+- MDX support enabled for markdown content.
+- Sitemap and robots.txt are generated dynamically.
+
+<Tip>
+Replacing `yourdomain.com` with your actual live domain ensures URLs in sitemap and metadata are correct, improving SEO and link functionality.
+</Tip>
+
+---
+
+### Step 2: Build Your Site for Production
+
+From your project root, run the build command to generate optimized production-ready files:
+
+```bash
+npm run build
+```
+
+or if you use yarn:
+
+```bash
+yarn build
+```
+
+Expected results:
+- A `dist/` folder is created containing static assets and server files.
+- The sitemap.xml and robots.txt are generated inside `dist/`.
+- No build errors are reported.
+
+<Tip>
+If the build fails, verify your configuration and content files. See the [Troubleshooting Common Setup Issues](/getting-started/first-run-validation/common-setup-troubleshooting) guide.
+</Tip>
+
+---
+
+### Step 3: Deploy to Netlify
+
+There are two common ways to deploy:
+
+- **Automatic deployment via Git integration:** Connect your GitHub repository to Netlify. Netlify will build and deploy automatically on push.
+- **Manual deployment:** Drag and drop the `dist/` folder content into Netlify’s web UI or use Netlify CLI.
+
+#### Automatic Deployment Setup
+1. Log in to your [Netlify dashboard](https://app.netlify.com).
+2. Click 'New site from Git' and connect your repository.
+3. Confirm build command `npm run build` and publish directory `dist`.
+4. Deploy the site and wait for build and deploy steps to complete.
+
+#### Manual Deployment Setup
+1. Log in to Netlify and create a new site.
+2. Upload the contents of your `dist/` folder.
+3. Wait for the upload to finish.
+
+<Tip>
+Netlify automatically handles CDN distribution and HTTPS provisioning.
+</Tip>
+
+---
+
+### Step 4: Verify Your Deployment
+
+After deployment:
+
+- Visit your live site domain to confirm it loads correctly.
+- Check critical pages such as `/about`, `/projects`, `/blog` are rendered with up-to-date content.
+- Visit `/sitemap.xml` to confirm your sitemap is generated and includes your pages and blog posts.
+- Visit `/robots.txt` to verify crawler directives match your configuration.
+
+<Tip>
+Use browser dev tools or online SEO tools to test page HTTP status, SEO metadata, and sitemap validity.
+</Tip>
+
+<Tip>
+If you see outdated content, try clearing CDN cache or confirm a successful new deployment.
+</Tip>
+
+---
+
+## 3. Practical Example: Deploying on Netlify
+
+1. Update `astro.config.mjs` with your site domain.
+2. Run `npm run build`.
+3. Push changes to GitHub.
+4. Netlify automatically builds and deploys.
+5. Open your site URL, verify `/sitemap.xml` and `/robots.txt`.
+
+This common workflow simplifies content updates and deployment synchronization.
+
+---
+
+## 4. Troubleshooting & Tips
+
+### Common Issues
+- **Build fails with errors:** Check for missing or malformed blog post frontmatter.
+- **Deployment succeeds but site shows outdated content:** Clear CDN cache or redeploy.
+- **Sitemap missing blog post URLs:** Ensure blog posts are in the correct directory (`src/content/blog`) and named properly.
+- **robots.txt not blocking disallowed paths:** Verify config options and netlify.toml settings if used.
+
+### Best Practices
+- Keep your site URL consistent between `astro.config.mjs` and your deployment platform.
+- Regularly test your sitemap and robots.txt URLs after deployment.
+- Use MDX for blog posts to add interactivity as needed.
+
+### Performance Considerations
+- Netlify’s CDN automatically optimizes content delivery.
+- Minimize large images or assets to keep build output lean.
+- Use lazy loading in blog posts for media to speed initial page loads.
+
+### Alternative Hosting
+This guide focuses on Netlify usage. For other platforms like Vercel or GitHub Pages, adjust build and deployment steps accordingly and update your `astro.config.mjs` adapter or output modes.
+
+---
+
+## 5. Next Steps & Related Content
+
+- Explore detailed deployment settings in [Site Configuration](/getting-started/setup-installation/configuration-setup-basics).
+- Begin publishing content with [Create and Publish a Blog Post](/guides/content-management/create-blog-post).
+- Review [Troubleshooting Common Setup Issues](/getting-started/first-run-validation/common-setup-troubleshooting) for problem-solving tips.
+- Learn about site structure and extensibility in [Architecture Overview](/overview/architecture-integration/architecture-overview).
+
+---
+
+This guide empowers you to confidently launch your personal portfolio online, combining performance, SEO readiness, and easy ongoing deployment management.
+
+---
