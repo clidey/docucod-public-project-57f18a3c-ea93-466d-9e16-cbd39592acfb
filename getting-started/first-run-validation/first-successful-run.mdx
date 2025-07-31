@@ -3,4 +3,146 @@ title: "Launching Your Site Locally"
 description: "Guided steps to start the local development server, view your portfolio and blog, and access key project pages. Learn how to recognize a successful launch and basic troubleshooting for startup issues."
 ---
 
-*This page will automatically be generated from the codebase*
+# Launching Your Site Locally
+
+## Overview
+
+This guide walks you through the practical steps to start your portfolio-site development server on your local machine, view your portfolio and blog pages, and access key parts of your site. By following these instructions, you will verify your site is running correctly and know how to troubleshoot common startup problems.
+
+---
+
+## 1. Starting the Local Development Server
+
+Launching your site locally allows you to preview your portfolio changes in real time before deployment. Here is the straightforward procedure:
+
+### Step 1: Open Your Terminal
+
+Open a terminal window or command prompt in the root directory of your portfolio-site project.
+
+### Step 2: Run the Development Command
+
+Execute the following command depending on your package manager:
+
+<CodeGroup>
+```bash
+npm run dev
+```
+```bash
+yarn dev
+```
+```bash
+pnpm dev
+```
+</CodeGroup>
+
+You will see output indicating the dev server is starting. Wait until you see a message like:
+
+```
+Local: http://localhost:3000
+Network: http://192.168.x.x:3000
+```
+
+### Step 3: Open Your Browser
+
+Navigate to `http://localhost:3000` in your preferred web browser.
+
+
+<Tip>
+If your default browser does not open automatically, open it manually and enter the URL shown in the terminal.
+</Tip>
+
+---
+
+## 2. Navigating Your Portfolio Site Locally
+
+Once the site is running locally, you can explore these main pages to validate content and layout:
+
+- **Home/About Page:** `http://localhost:3000` shows your personal profile and introduction.
+- **Projects Page:** `http://localhost:3000/projects` lists your portfolio projects.
+- **Blog Index:** `http://localhost:3000/blog` presents all blog posts.
+- **Individual Blog Post:** `http://localhost:3000/blog/<post-slug>` loads a specific blog post.
+- **Resume Page:** `http://localhost:3000/resume` displays your embedded resume (if configured).
+
+<Tip>
+Bookmark these URLs for quick local access during development.
+</Tip>
+
+---
+
+## 3. Recognizing a Successful Launch
+
+You have successfully launched your site locally if:
+
+- The server starts without errors and displays the local URL.
+- Navigating to `http://localhost:3000` loads your About page with correct content.
+- Project and blog pages load smoothly with expected lists and posts.
+- The site layout, navigation menu, and interactive elements respond correctly.
+
+<Check>
+If you encounter the site but with missing content or broken styles, review your content files and site configuration.
+</Check>
+
+---
+
+## 4. Basic Troubleshooting for Startup Issues
+
+If you face challenges starting or viewing your site, use these targeted troubleshooting tips.
+
+<AccordionGroup title="Common Startup Issues & Solutions">
+<Accordion title="1. Development Server Won't Start">
+- Verify you are in the correct project root directory.
+- Confirm you have installed dependencies by running `npm install` or equivalent.
+- Check for node version compatibility (Node.js 16 or later recommended).
+- Review terminal output for specific error messages and resolve accordingly.
+</Accordion>
+
+<Accordion title="2. Port 3000 Already in Use">
+- The default Astro dev server uses port 3000. If it is occupied:
+  - Stop the other application using that port.
+  - Or, start Astro on a different port with:
+  ```bash
+  npm run dev -- --port=YOUR_PORT
+  ```
+</Accordion>
+
+<Accordion title="3. Pages Not Loading or 404 Errors">
+- Confirm your content files and routes exist (for example, blog posts in `src/content/blog`).
+- Check your filesystem — the blog slug in the URL must match a markdown filename.
+- Validate your project build is current; try stopping and restarting the dev server.
+</Accordion>
+
+<Accordion title="4. Styles or Images Not Displaying Correctly">
+- Ensure your CSS and static assets are correctly referenced.
+- Verify any base paths or public directory configurations in `astro.config.mjs`.
+- Clear your browser cache and reload.
+</Accordion>
+
+<Accordion title="5. Unexpected Console Errors">
+- Open browser developer tools console to identify JavaScript or loading errors.
+- Investigate specific errors—missing modules, network failures, or syntax errors.
+- Cross-check your project dependencies and versions.
+</Accordion>
+</AccordionGroup>
+
+<Note>
+For detailed troubleshooting, see the [Troubleshooting Common Setup Issues](/getting-started/first-run-validation/common-setup-troubleshooting) documentation page.
+</Note>
+
+---
+
+## 5. Additional Tips & Best Practices
+
+- **Keep your dependencies up to date** by running a package manager update regularly.
+- Use a modern browser like Chrome, Firefox, or Edge for best compatibility.
+- Customize your `astro.config.mjs` file to reflect your site settings before deployment.
+- Explore incremental changes locally to catch errors early.
+
+## 6. Next Steps
+
+- Once your site runs smoothly locally, proceed to [Configure Key Site Settings](/getting-started/setup-installation/configuration-setup-basics) to customize branding and metadata.
+- Follow [Deploy Your Portfolio Site](/guides/getting-started/deploy-your-portfolio) for instructions on publishing your site to the web.
+- If you encounter issues, consult the [Troubleshooting Guide](/support/troubleshooting/common-issues) for expert help and common fixes.
+
+---
+
+This getting started guide ensures you can launch your portfolio-site on your local machine, verify its operation, and resolve common startup problems, empowering you to develop and showcase your personal brand confidently.
