@@ -3,4 +3,302 @@ title: "Configuring Your Site"
 description: "Walk through core site configuration options such as setting site metadata, customizing branding, and updating essential settings. Covers modifying config files and understanding their impact on site behavior."
 ---
 
-*This page will automatically be generated from the codebase*
+# Configuring Your Site
+
+Configure your Astro-powered personal website by setting up essential site metadata, customizing branding, and adjusting core behavioral settings. This guide walks you through modifying key configuration files, explains their impact, and ensures your site is tailored to your preferences and deployment environment.
+
+---
+
+## 1. Understanding Site Configuration
+
+The site configuration lies at the heart of your portfolio site’s behavior and presentation. It governs:
+
+- **Site Metadata:** Defines your site’s name, description, URL, and author details.
+- **Branding Elements:** Customize favicon, title templates, and meta tags for SEO and social sharing.
+- **Build & Deployment Settings:** Specify output directories, enable integrations like MDX support, sitemaps, robots.txt, and deployment adapters.
+- **Dynamic Content Inclusion:** Dynamically include blog posts URLs to tooling like sitemap generation.
+
+This centralized control enables you to modify your site identity and functionality cleanly and effectively.
+
+---
+
+## 2. Key Site Configuration Files
+
+### astro.config.mjs
+
+This file configures your Astra project build process, integrations, and deployment targets. It is where you:
+
+- Set your live site URL via the `site` property.
+- Define where build outputs are placed with `outDir` (if customized).
+- Activate MDX plugin for rich blog content.
+- Add deployment adapter (e.g., Netlify) for hosting integration.
+- Configure SEO tools like sitemap and robots.txt with generated pages and policies.
+
+#### Typical snippet example:
+
+```js
+import { defineConfig } from 'astro/config';
+import mdx from '@astrojs/mdx';
+import netlify from '@astrojs/netlify';
+import sitemap from '@astrojs/sitemap';
+import robotsTxt from 'astro-robots-txt';
+
+import path from 'path';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const directoryPath = path.join(__dirname, 'src/content/blog');
+const files = fs.readdirSync(directoryPath);
+const blogUrls = files.map(file => {
+  const fileName = file.split('.')[0];
+  return `https://anguelh.com/blog/${fileName}`;
+});
+
+export default defineConfig({
+  output: 'server',
+  outDir: './dist',
+  adapter: netlify(),
+  site: 'https://anguelh.com',
+  integrations: [
+    mdx(),
+    sitemap({
+      customPages: [
+        'https://anguelh.com',
+        'https://anguelh.com/blog',
+        'https://anguelh.com/resume',
+        'https://anguelh.com/projects',
+      ].concat(blogUrls),
+      priority: 0.5,
+      changefreq: 'monthly',
+    }),
+    robotsTxt({
+      userAgent: '*',
+      allow: '/',
+      disallow: '/admin',
+      crawlDelay: 10,
+    }),
+  ],
+});
+```
+
+This setup ensures:
+- The sitemap reflects both static and dynamically added blog posts.
+- Robots.txt guides search engines with crawl policies.
+- Netlify adapter optimizes deployment.
+
+---
+
+## 3. Customizing Site Metadata and Branding
+
+### Metadata Configuration
+
+Metadata drives your website’s SEO footprint and social media sharing cards. Key properties are set primarily in your base layout component, `BaseHead.astro`, such as:
+
+- `title` — Your site page title, shown in browser tabs and search results.
+- `description` — A concise summary describing your site content.
+- `author` — Your name or brand name.
+- `image` — The favicon or social sharing image.
+
+These are wired from constants in your project, typically imported from a constants file.
+
+#### How to update:
+
+1. Open `src/components/BaseHead.astro`.
+2. Modify the imported constants (`SITE_DESCRIPTION`, `AUTHOR`, `SITE_URL`) or override props passed to `<BaseHead />` in pages/layouts.
+3. The configured values automatically populate standard meta tags — OpenGraph, Twitter Cards, and Google robot directives.
+
+<Tip>
+Keep your description clear and under 160 characters for optimal search engine display.
+</Tip>
+
+<Warning>
+Avoid duplicate or missing metadata tags. Consistency ensures effective SEO and prevents crawler confusion.
+</Warning>
+
+### Favicon and Brand Assets
+
+- The favicon URL is set in the `<link rel='shortcut icon'>` tag in `BaseHead.astro`.
+- Default favicon path is `/icon.png`; replace this image file in your `public` folder to customize.
+
+---
+
+## 4. Modifying Core Site Settings
+
+These settings are typically controlled via your `astro.config.mjs` and can influence build output and runtime behavior.
+
+### Site URL
+
+- Critical for absolute links, sitemap entries, and canonical URLs.
+- Should reflect your production URL exactly.
+  
+```js
+site: 'https://yourdomain.com',
+```
+
+### Output Directory
+
+- Default is `./dist`; change if integrating with specific hosting setups.
+- Example:
+
+```js
+outDir: './build',
+```
+
+### Integrations
+
+- Make sure all your intended plugins (MDX, sitemap, robots.txt, deployment adapter) are listed under `integrations`.
+- Each integration usually accepts customization as documented in their own docs.
+
+### Sitemap
+
+- Dynamically add blog URLs by scanning the blog content directory.
+- Use the `customPages` or `routes` property to explicitly list pages for SEO coverage.
+
+### Robots.txt
+
+- Customize crawler policies through the `policy` or `userAgent` predicate rules.
+- Example:
+
+```js
+robotsTxt({
+  policy: [
+    { userAgent: '*', allow: '/' },
+    { userAgent: '*', disallow: ['/admin'] },
+  ],
+});
+```
+
+---
+
+## 5. Impact of Config Changes on Site Behavior
+
+- **Changing `site` URL:**
+  Updates all absolute links, sitemap URLs, and canonical URLs. Essential after migrating your website domain.
+
+- **Adjusting sitemap settings:**
+  Ensures search engines index your content accurately. Missing pages here can reduce site discoverability.
+
+- **Modifying robots.txt rules:**
+  Controls crawler and SEO bot behavior. Incorrectly disallowing pages may cause them not to appear in search results.
+
+- **Changing branding in metadata:**
+  Affects how your site appears on social networks and search engine result pages.
+
+- **Deployment adapter changes:**
+  Determines how and where your site builds and deploys; improper configuration may break deployment.
+
+---
+
+## 6. Step-by-Step: Update Site Metadata and Configuration
+
+<Steps>
+<Step title="Locate Configuration Files">
+Open your project folder and find the following files:
+- `astro.config.mjs` for main site build and integrations
+- `src/components/BaseHead.astro` for metadata
+</Step>
+
+<Step title="Modify Site URL and Integrations">
+Edit `astro.config.mjs` to update the `site` property to your live URL and add or adjust adapter and plugins as needed.
+
+Example:
+
+```js
+site: 'https://your-updated-domain.com',
+```
+</Step>
+
+<Step title="Update Metadata Constants">
+Open constants files or directly edit `BaseHead.astro` imports to reflect your site description, author name, and other metadata.
+
+Example:
+
+```js
+const SITE_DESCRIPTION = 'Your personal site showcasing portfolio and blog.';
+const AUTHOR = 'Your Name';
+```
+</Step>
+
+<Step title="Replace Favicon">
+Place your custom favicon image at `/public/icon.png` or update the favicon link in `BaseHead.astro` to point to your desired image path.
+</Step>
+
+<Step title="Rebuild and Test">
+Run your build command to regenerate output with updated settings:
+
+```bash
+npm run build
+```
+
+Preview locally with:
+
+```bash
+npm start
+```
+
+Confirm that:
+- Page titles and meta tags reflect your changes
+- Favicon displays correctly
+- Sitemap and robots.txt reflect updated URLs
+</Step>
+</Steps>
+
+---
+
+## 7. Troubleshooting Configuration Issues
+
+If you encounter unexpected behavior after editing site configuration, consider the following:
+
+<AccordionGroup title="Common Configuration Pitfalls">
+<Accordion title="Site URL Mismatch">
+Ensure the `site` URL matches exactly with your live domain. Mismatches cause broken canonical links and unreliable sitemap URLs.
+</Accordion>
+<Accordion title="Missing Blog URLs in Sitemap">
+Verify that the blog posts are correctly detected by filesystem scanning in `astro.config.mjs`. Check path correctness and file extensions (.md, .mdx).
+</Accordion>
+<Accordion title="SEO Meta Tags Not Updating">
+Clear your browser cache and confirm edits in `BaseHead.astro`. Also verify the constants file if you use one.
+</Accordion>
+<Accordion title="Favicon Not Showing">
+Ensure the favicon image path is correct and the file exists under `public/`. Check browser caching or try a hard refresh.
+</Accordion>
+<Accordion title="Build or Deployment Failures">
+Check console logs for errors from missing plugins or adapter misconfigurations. Validate your `astro.config.mjs` syntax.
+</Accordion>
+</AccordionGroup>
+
+For persistent issues, consult the [Troubleshooting Guide](/getting-started/first-run-validation/common-setup-troubleshooting) or seek community support.
+
+---
+
+## 8. Next Steps
+
+After configuring your site:
+
+- **Verify your changes locally:** Use your development server to preview and validate metadata and branding.
+- **Deploy your site:** Follow the [Deployment Guide](/configuration/deployment/deployment-guide) to publish your site on Netlify.
+- **Create content:** Add blog posts in the `src/content/blog` directory to enrich your site.
+- **Customize styles:** Explore style and theme configuration to match your brand personality.
+
+By mastering site configuration, you gain full control over how your portfolio site behaves, looks, and interacts with users and search engines.
+
+---
+
+## References & Related Documentation
+
+- [astro.config.mjs](../../src/pages/astro.config.mjs) — Main configuration file reference
+- [BaseHead Component](../../src/components/BaseHead.astro) — Site metadata and head elements
+- [Deployment Guide](/configuration/deployment/deployment-guide) — Steps to launch your site live
+- [Troubleshooting Guide](/getting-started/first-run-validation/common-setup-troubleshooting) — Fix common issues
+- [Architecture Overview](/overview/intro/architecture) — Understand site structure
+- [Creating & Managing Blog Posts](/guides/content-management/create-blog-post) — Add content
+
+<Tip>
+Regularly update your metadata and configuration files as your brand evolves and you publish more content. This ensures consistent, optimized user experiences and SEO results.
+</Tip>
+
+---
+
+*This page is part of the Getting Started section focused on initial setup and configuration to tailor your personal portfolio site effectively.*
