@@ -1,0 +1,172 @@
+---
+title: "Manage Privacy Policy Pages"
+description: "Step-by-step guidance on adding, updating, and maintaining privacy policy documents via markdown. Find out how policies are rendered and linked, and ensure your site stays compliant and transparent."
+---
+
+# Manage Privacy Policy Pages
+
+## Overview
+
+This guide provides detailed, actionable instructions on adding, updating, and maintaining your privacy policy documents using Markdown files within the portfolio-site framework. By following this workflow, you will ensure your site’s privacy policies remain clear, accessible, and compliant with relevant regulations.
+
+## Purpose & Value
+
+Managing privacy policy pages centrally gives you full control to keep your policies up-to-date and consistent. Privacy policies are critical for visitor trust and regulatory compliance, especially under laws like GDPR and CCPA. This guide focuses specifically on the process of creating and maintaining privacy policy documents as Markdown content and linking them within your site.
+
+---
+
+## Prerequisites
+
+Before you begin:
+
+- Your local environment must have the portfolio-site project cloned and dependencies installed as per [Installing the Portfolio Site](/getting-started/setup-installation/installing-the-portfolio-site).
+- You should be familiar with Markdown syntax for writing content.
+- Basic knowledge of your site's content folder structure, particularly the `privacy_policies` content collection.
+- The development server running locally to preview changes.
+
+---
+
+## Expected Outcome
+
+- Creation of new privacy policy pages as Markdown or Astro content files
+- Ability to edit and update existing policies easily
+- Policies that render consistently with your site’s visual style and SEO settings
+- Privacy policy pages linked properly in your site navigation and sitemap
+- Live preview during development and smooth deployments
+
+---
+
+## Step-by-Step Instructions
+
+### 1. Locate the Privacy Policy Content Directory
+
+Access the `src/content/privacy_policies` folder in your project repository. This folder contains all your Markdown privacy policy documents.
+
+### 2. Create a New Privacy Policy File
+
+- Add a new Markdown (`.md`) or MDX file named with your desired slug, for example, `cookie-policy.md`.
+- Use frontmatter to define metadata such as:
+
+```markdown
+---
+title: "Cookie Policy"
+description: "How cookies are used on this site"
+lastUpdatedDate: 2024-06-15
+---
+
+# Cookie Policy
+
+Content goes here...
+```
+
+### 3. Write or Update Content Using Markdown
+
+- Use clear, concise language and structure your policy with headings, bullet points, and callouts.
+- Maintain accessibility by following design guidelines from [Adding & Editing Privacy Policies](/usage/privacy-policies/manage-privacy-policies).
+
+### 4. Preview the Policy Page Locally
+
+- Run your development server using `npm run dev` (or equivalent).
+- Navigate to `/privacy_policies/[slug]` replacing `[slug]` with your policy file name, e.g., `/privacy_policies/cookie-policy`.
+- Verify the rendered page matches your expectations.
+
+### 5. Link the Privacy Policy in Site Navigation
+
+- Open your site’s navigation configuration file (commonly found in `src/config/navigation.ts` or similar).
+- Add an entry under Privacy Policies or the footer section to include the new policy:
+
+```js
+{
+  text: 'Cookie Policy',
+  href: '/privacy_policies/cookie-policy'
+}
+```
+
+- Save and reload your development server to check the navigation update.
+
+### 6. Commit & Deploy
+
+- Commit your changes to version control. Since privacy policies are content markdown files, version history is maintained automatically.
+- When ready, deploy your updated site to your hosting platform, such as Netlify, following steps in [Deploy Your Portfolio Site](/guides/getting-started/deploy-your-portfolio).
+
+---
+
+## How Privacy Policies Are Rendered
+
+Privacy policy Markdown files are rendered using the `src/layouts/PrivacyPolicy.astro` component which:
+
+- Displays the policy title prominently
+- Shows the last updated date formatted for readability
+- Applies consistent site-wide styling for a professional look
+
+Example page code snippet:
+
+```astro
+---
+import PrivacyPolicy from '../../layouts/PrivacyPolicy.astro';
+import Layout from '../../layouts/Page.astro';
+
+const policies = await getCollection('privacy_policies');
+const { slug } = Astro.params;
+const policy = policies.find(page => page.slug === slug);
+if (!policy) return Astro.redirect('/404');
+const { Content } = await policy.render();
+---
+
+<Layout title={`Privacy Policy | ${policy.data.title}`}>
+  <PrivacyPolicy {...policy.data}>
+    <Content />
+  </PrivacyPolicy>
+</Layout>
+```
+
+---
+
+## Best Practices & Tips
+
+- **Keep policies clear and concise:** Use simple language with well-structured headings and lists.
+- **Use version control wisely:** Try to update the `lastUpdatedDate` metadata on every change.
+- **Test navigation links:** Always verify that linked policies are accessible via menus and footers.
+- **Preview continuously:** Use local server previews to catch formatting issues early.
+- **Ensure accessibility:** Confirm keyboard navigation and screen reader compatibility on your privacy pages.
+
+---
+
+## Common Pitfalls & Troubleshooting
+
+### Privacy Policy Page Not Found
+- Confirm the Markdown file exists in the `privacy_policies` folder with correct slug.
+- Check spelling and casing in the URL path.
+
+### Navigation Link Missing or Broken
+- Verify the link was added correctly to the site navigation configuration.
+- Restart your dev server if navigation changes don’t appear immediately.
+
+### Formatting Issues in Policy Content
+- Validate your Markdown syntax.
+- Use preview to identify issues before deployment.
+
+### Deployment Not Reflecting Updates
+- Confirm changes are committed and pushed to your remote repository.
+- Verify build logs and deployment status on your hosting platform.
+
+---
+
+## Next Steps & Related Documentation
+
+- Review the **[Adding & Editing Privacy Policies](/usage/privacy-policies/manage-privacy-policies)** for in-depth content authoring guidance.
+- Explore **[Privacy Policy Navigation](/usage/privacy-policies/privacy-navigation)** to set up polished, user-friendly navigation.
+- See **[Site Configuration](/getting-started/setup-installation/configuration-setup-basics)** for metadata and sitemap settings.
+- Consult **[Deploy Your Portfolio Site](/guides/getting-started/deploy-your-portfolio)** to publish changes live.
+- For troubleshooting, reference **[Common Setup Issues](/getting-started/first-run-validation/common-setup-troubleshooting)**.
+
+
+---
+
+<Tip>
+Keeping your privacy policies up-to-date not only helps comply with legal requirements but also fosters trust with your visitors. Integrate policy updates into your content workflow to maintain transparency effortlessly.
+</Tip>
+
+<Note>
+This guide covers privacy policy page content management only. For legal compliance, consult with a lawyer or specialist to craft your actual policy text.
+</Note>

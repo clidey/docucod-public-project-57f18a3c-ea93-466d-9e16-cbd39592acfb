@@ -1,0 +1,151 @@
+---
+title: "Prerequisites & System Requirements"
+description: "Learn about the tools, operating systems, and dependencies you need before starting. Clear explanations help you prepare your environment and avoid common pitfalls—whether you're using Windows, macOS, or Linux."
+---
+
+# Prerequisites & System Requirements
+
+## Purpose & Positioning
+
+Before you begin building or customizing your Astro-powered personal website, it's crucial to prepare your development environment properly. This section guides you through the essential tools, software, and system requirements needed to ensure a smooth installation and usage experience, regardless of whether you're on Windows, macOS, or Linux.
+
+Understanding these prerequisites upfront helps you avoid common setup pitfalls and speeds up your workflow.
+
+---
+
+## System Requirements
+
+- **Operating Systems Supported:**
+  - Windows 10 or higher
+  - macOS Catalina (10.15) or higher
+  - Major Linux distributions (Ubuntu, Debian, Fedora, etc.)
+
+- **Hardware:**
+  - Minimum 4 GB RAM (8 GB or more recommended for faster builds)
+  - At least 2 GHz dual-core processor
+  - Minimum 2 GB free disk space for project and dependencies
+
+- **Development Environment:**
+  - Command line interface (Terminal on macOS/Linux, PowerShell or CMD on Windows)
+  - Modern web browser (Chrome, Firefox, Edge, or Safari) for preview and testing
+
+---
+
+## Dependencies
+
+To fully work with this project, you need several key software packages installed beforehand:
+
+1. **Node.js & npm**
+
+   Astro, the framework powering the site, runs on Node.js. npm (Node Package Manager) comes bundled with Node.js and is used for installing packages.
+
+   - **Recommended Version:** Node.js 18.x or higher
+
+   **Installation:**
+   - Visit the official site: https://nodejs.org/
+   - Download and install the LTS (Long Term Support) version appropriate for your OS
+
+   **Verify installation:**
+   ```bash
+   node -v
+   npm -v
+   ```
+   Expected output: version numbers displayed (e.g., v18.16.0 for node)
+
+2. **Git**
+
+   For cloning and managing the project code, Git version control is mandatory.
+
+   - **Recommended Version:** Git 2.30 or higher
+
+   **Installation:**
+   - Windows: Download from https://git-scm.com/download/win (Git Bash included)
+   - macOS: Install via Homebrew `brew install git` or download installer
+   - Linux: Install via package manager (e.g., `sudo apt install git`)
+
+   **Verify installation:**
+   ```bash
+   git --version
+   ```
+   Expected output: Git version number
+
+3. **Code Editor (Recommended)**
+
+   To edit and maintain site files efficiently, use a modern code editor:
+
+   - Visual Studio Code: https://code.visualstudio.com/
+   - JetBrains WebStorm (optional)
+
+   These editors provide syntax highlighting, IntelliSense, and integrated terminal support.
+
+---
+
+## Access Requirements
+
+- **GitHub Account (Optional but Recommended)**
+
+  Having a GitHub account makes it easier to clone, fork, and contribute or deploy repositories.
+
+- **Admin Rights on Your Machine**
+
+  You may need administrator privileges to install software or configure environment variables.
+
+- **Network & Firewall**
+
+  Ensure your network allows HTTP/HTTPS access for downloading packages from npm and GitHub repositories.
+
+  - Ports 80 (HTTP) and 443 (HTTPS) should be open.
+  - Proxy configurations must allow these connections.
+
+---
+
+## Practical Tips & Best Practices
+
+- Always use the **latest stable versions** of Node.js and Git to avoid compatibility issues.
+- Prefer installing software from official sources to ensure security and integrity.
+- When using Windows, consider using **Git Bash** or **Windows Subsystem for Linux (WSL)** for a better terminal experience.
+- Ensure your PATH environment variables include Node.js and Git executables for seamless CLI usage.
+
+---
+
+## Common Pitfalls & How to Avoid Them
+
+- **Old Node.js Versions:** Using outdated Node.js versions causes build failures. Verify `node -v` before proceeding.
+- **Missing Permissions:** Install software with appropriate privileges to avoid incomplete installations.
+- **Network Restrictions:** Corporate networks may block HTTP/HTTPS requests; consult your network admin if npm installs fail.
+- **Case Sensitivity Issues (Windows vs Linux):** Project files are case sensitive on macOS/Linux but not Windows. Be consistent with file naming.
+
+---
+
+## Verification Checklist
+
+After installing prerequisites, confirm your setup:
+
+```bash
+node -v         # Should show v18.x or higher
+npm -v          # Should show npm version
+git --version   # Should show git version
+```
+
+Run a quick test to ensure npm can fetch packages:
+
+```bash
+npm init -y      # Creates a package.json file
+npm install astro --save-dev   # Attempts to install Astro
+```
+
+If these commands complete without errors, your environment is ready for the next installation and configuration steps.
+
+---
+
+## Next Steps
+
+- Proceed to [Installing the Portfolio Site](/getting-started/setup-installation/installing-the-portfolio-site) to set up the project locally.
+- Review [Site Configuration](/configuration/site-configuration/configure-site) to understand how to tailor your site settings.
+- For deployment, familiarize yourself with the [Deployment Guide](/configuration/deployment/deployment-guide).
+
+---
+
+<Tip>
+If you encounter any issues during setup, check the [Troubleshooting Guide](/support/troubleshooting/common-issues) for tips specific to environment and installation problems.
+</Tip>

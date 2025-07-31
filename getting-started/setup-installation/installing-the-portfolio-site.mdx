@@ -1,0 +1,224 @@
+---
+title: "Installing the Portfolio Site"
+description: "Step-by-step instructions for downloading or cloning the project and installing dependencies using your preferred package manager. Includes troubleshooting for common install issues across different environments."
+---
+
+# Installing the Portfolio Site
+
+This guide walks you through downloading or cloning the portfolio-site project and installing all necessary dependencies with your preferred package manager. You will learn how to set up a fully functional local environment so you can begin customizing and running the site immediately.
+
+---
+
+## 1. Prerequisites Check
+
+Before installation, ensure your environment meets the following requirements:
+
+- **Node.js**: Version 18.x or higher is required. Verify by running:
+
+  ```bash
+  node -v
+  ```
+
+  If not installed, download from [Node.js official website](https://nodejs.org/).
+
+- **Git**: Required to clone the repository if you opt for this method. Check with:
+
+  ```bash
+  git --version
+  ```
+
+  Install Git from [Git official website](https://git-scm.com/) if missing.
+
+- **Internet Connection**: Necessary to download dependencies from npm registries.
+
+- **Package Manager**: You can use `npm`, `yarn`, or `pnpm`. Ensure your chosen manager is installed:
+
+  ```bash
+  npm -v
+  yarn -v
+  pnpm -v
+  ```
+
+  If not installed, pick one and follow its installation instructions.
+
+---
+
+## 2. Downloading the Project
+
+Choose one of the following methods to obtain the project source code.
+
+### Option A: Clone the GitHub Repository
+
+1. Open your terminal or command prompt.
+2. Navigate to your desired projects folder:
+
+   ```bash
+   cd ~/projects
+   ```
+
+3. Clone the repository:
+
+   ```bash
+   git clone https://github.com/modelorona/anguelh.com.git
+   ```
+
+4. Change into the project directory:
+
+   ```bash
+   cd anguelh.com
+   ```
+
+### Option B: Download ZIP from GitHub
+
+1. Visit the repository page: [https://github.com/modelorona/anguelh.com](https://github.com/modelorona/anguelh.com)
+2. Click the **Code** button.
+3. Select **Download ZIP**.
+4. Extract the ZIP file to a folder.
+5. Open a terminal and navigate to that extracted folder.
+
+---
+
+## 3. Installing Dependencies
+
+After obtaining the source code, install the project dependencies to prepare the environment.
+
+### Using Your Preferred Package Manager
+
+#### With npm
+
+```bash
+npm install
+```
+
+#### With Yarn
+
+```bash
+yarn install
+```
+
+#### With pnpm
+
+```bash
+pnpm install
+```
+
+> This command downloads all required packages listed in `package.json` and sets up the local environment.
+
+---
+
+## 4. Verifying Successful Installation
+
+Confirm the packages installed correctly by checking the node_modules directory or running:
+
+```bash
+npm run dev
+```
+
+Or, if you are using yarn:
+
+```bash
+yarn dev
+```
+
+You should see an output indicating your Astro development server is running, such as:
+
+```
+[astro] Local: http://localhost:3000
+[astro] Network: use --host to expose
+[astro] Press Ctrl+C to stop
+```
+
+Open your browser and navigate to `http://localhost:3000` to verify the local site loads without errors.
+
+---
+
+## 5. Troubleshooting Common Installation Issues
+
+<AccordionGroup title="Installation Troubleshooting">
+<Accordion title="Node.js Version Issues">
+Ensure your Node.js version meets the minimum requirement (>=18.x). Run:
+
+```bash
+node -v
+```
+
+If you see an older version, update Node.js using the official installers or tools like nvm.
+</Accordion>
+
+<Accordion title="Dependency Download Failures">
+- Check your internet connection.
+- If behind a proxy or firewall, configure your environment accordingly.
+- Clear npm cache and retry:
+  
+  ```bash
+  npm cache clean --force
+  npm install
+  ```
+</Accordion>
+
+<Accordion title="Permission Errors on Installation">
+- Avoid installing with sudo unless necessary.
+- On Unix-like systems, fix permissions by resetting ownership of your project folder.
+- Consider using a Node version manager to avoid global permission conflicts.
+</Accordion>
+
+<Accordion title="Missing Package Manager">
+- Verify the package manager you’re using is installed correctly.
+- If commands like `npm` or `yarn` fail, reinstall them.
+</Accordion>
+
+<Accordion title="Port Conflicts on Dev Server Startup">
+- If `npm run dev` fails because the port is in use, either stop the conflicting process or start the dev server on a different port:
+
+  ```bash
+  npm run dev -- --port 4000
+  ```
+</Accordion>
+</AccordionGroup>
+
+---
+
+## 6. Next Steps
+
+Now that you have the portfolio site installed and dependencies configured:
+
+- Proceed to **Configure Your Site** by adjusting `astro.config.mjs` as per your needs. See [Configuring Your Site](./configuration-setup-basics) for guidance.
+
+- Launch your site locally using `npm run dev` and explore modifying pages, blog posts, and project listings.
+
+- When ready, follow the [Deployment Guide](../../configuration/deployment/deployment-guide) to publish your website.
+
+---
+
+## Summary
+
+By following this installation guide, you will have a local setup of your portfolio site, complete with all dependencies installed. This foundational step prepares you to customize content, configure settings, and launch your personal website effectively.
+
+<Tip>
+Remember to keep your Node.js and package manager versions up to date for the best development experience.
+</Tip>
+
+<Tip>
+Use version control effectively by committing your configuration and content changes regularly.
+</Tip>
+
+For detailed troubleshooting assistance and further setup topics, consult the [Troubleshooting Common Setup Issues](../first-run-validation/common-setup-troubleshooting) page.
+
+---
+
+## References
+
+- GitHub Repository: [https://github.com/modelorona/anguelh.com](https://github.com/modelorona/anguelh.com)
+- Node.js: [https://nodejs.org/](https://nodejs.org/)
+- Git: [https://git-scm.com/](https://git-scm.com/)
+- Astro Documentation: [https://docs.astro.build/](https://docs.astro.build/)
+
+---
+
+## Related Documentation
+
+- [Prerequisites & System Requirements](/getting-started/setup-installation/prerequisites-system-requirements)
+- [Configuring Your Site](/getting-started/setup-installation/configuration-setup-basics)
+- [Launching Your Site Locally](/getting-started/first-run-validation/first-successful-run)
+- [Deployment Guide](/configuration/deployment/deployment-guide)
+- [Troubleshooting Common Setup Issues](/getting-started/first-run-validation/common-setup-troubleshooting)

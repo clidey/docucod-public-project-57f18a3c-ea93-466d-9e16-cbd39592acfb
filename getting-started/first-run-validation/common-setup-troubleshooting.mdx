@@ -1,0 +1,203 @@
+---
+title: "Troubleshooting Common Setup Issues"
+description: "Solutions for frequently encountered problems during setup and first run, from dependency errors to configuration conflicts. Helps users quickly get unstuck and move forward with confidence."
+---
+
+# Troubleshooting Common Setup Issues
+
+## Overview
+Setting up your Astro-powered portfolio site can sometimes encounter bumps that slow your progress. This troubleshooting guide offers clear, actionable solutions to the most frequent problems users face during installation, configuration, and the first run. It empowers you to quickly identify issues, resolve them, and get your site running smoothly with confidence.
+
+---
+
+## 1. Identify the Problem Area
+Before diving into fixes, locate the problem domain:
+
+- **Navigation & UI Issues:** Problems with menu toggles, modals, or page elements not appearing.
+- **Content Display Problems:** Missing blog posts, broken layouts, or media embedding failures.
+- **Build & Deployment Errors:** Failing builds, adapter conflicts, or missing sitemap/robots.txt.
+- **Interactive Component Breakage:** Issues with modal contact forms, navigation toggles, or PDF embedding.
+- **RSS Feed Issues:** Errors or empty feeds when accessing blog syndication.
+
+Knowing the category speeds targeted troubleshooting.
+
+---
+
+## 2. Check Browser Console for Errors
+
+1. Open your site in a modern browser (Chrome, Firefox, Edge).
+2. Press `F12` or right-click and select `Inspect`.
+3. Go to the `Console` tab.
+4. Look for any **errors** or **warnings** logged when loading or interacting with the site.
+
+### Common Console Issues and Fixes
+
+- **JavaScript Errors:** Usually stem from missing dependencies or incorrect component imports.
+- **Failed Resource Loads:** Often indicate missing files, wrong paths, or permission issues.
+
+<Tip>
+If you identify errors related to external packages like Clippy or pdfobject, verify those packages are correctly installed and imported.
+</Tip>
+
+---
+
+## 3. Verify Site Configuration
+
+The `astro.config.mjs` file is the heart of your site’s build and deployment configuration.
+
+### Check These Key Areas:
+
+- **Site URL and Output:** Ensure `site` is set to your domain and `outDir` is correct.
+- **Integrations:** Confirm MDX, sitemap, robots.txt, and Netlify adapter are properly configured.
+- **Blog URLs in Sitemap:** Validate dynamic blog URL generation logic to ensure all posts are included.
+
+### Example Configuration Verification Snippet
+```js
+import { defineConfig } from 'astro/config';
+import mdx from '@astrojs/mdx';
+import netlify from '@astrojs/netlify';
+import sitemap from '@astrojs/sitemap';
+import robotsTxt from 'astro-robots-txt';
+
+export default defineConfig({
+  site: 'https://yourdomain.com',
+  outDir: './dist',
+  adapter: netlify(),
+  integrations: [
+    mdx(),
+    sitemap({
+      customPages: [
+        'https://yourdomain.com',
+        'https://yourdomain.com/blog',
+        // Include dynamic blog URLs
+      ],
+      priority: 0.5,
+      changefreq: 'monthly',
+    }),
+    robotsTxt({
+      userAgent: '*',
+      allow: '/',
+      disallow: ['/admin'],
+      crawlDelay: 10,
+    }),
+  ],
+});
+```
+
+<Tip>
+After editing `astro.config.mjs`, stop and restart your dev server to apply changes.
+</Tip>
+
+---
+
+## 4. Inspect Astro Components
+
+Many UI issues originate in component files such as the Header, Footer, or BaseHead.
+
+### Steps:
+
+1. Review your customizations in these components for syntax errors or broken imports.
+2. Check slot usage and props passed to ensure proper rendering.
+3. Temporarily simplify components by commenting out complex parts to isolate issues.
+
+<Tip>
+Use your IDE’s linting and syntax checking to catch unnoticed errors.
+</Tip>
+
+---
+
+## 5. Verify External Package Integrations
+
+Your site may rely on third-party packages like Clippy (the animated assistant), pdfobject (for PDF embedding), and MDX integrations.
+
+### Troubleshooting:
+
+- Confirm packages are installed (`npm install` or `yarn install`) without errors.
+- Ensure import statements use correct paths and names.
+- Validate the packages load correctly in the browser console (no 404s or reference errors).
+
+<Tip>
+Run `npm ls` or `yarn list` to see installed package versions. Upgrade outdated or incompatible versions cautiously.
+</Tip>
+
+---
+
+## 6. Isolate the Issue via Feature Toggling
+
+If errors persist:
+
+1. Disable or comment out recent feature additions or complex UI elements.
+2. Restart the dev server.
+3. Re-enable features one at a time to pinpoint the cause.
+
+This stepwise isolation helps identify the exact failure point.
+
+---
+
+## 7. Common Specific Issues & Fixes
+
+### Navigation Menu Toggle Not Working
+- **Cause:** Missing or incorrectly bound event listeners in the navigation component.
+- **Fix:** Confirm JavaScript toggling is implemented and linked properly to the hamburger menu.
+
+### Blog Posts Not Displaying
+- **Cause:** Incorrect blog content folder structure or markdown parsing errors.
+- **Fix:** Ensure posts are in `src/content/blog`, filenames use `.md` or `.mdx`, and frontmatter metadata is correctly formatted.
+
+### Sitemap or robots.txt Missing/Dynamic URLs Not Populated
+- **Cause:** Faulty dynamic URL generation logic or non-invoked sitemap plugin.
+- **Fix:** Verify your `astro.config.mjs` includes correct sitemap plugin usage and blog URLs are derived correctly.
+
+### Contact Modal Not Appearing
+- **Cause:** JavaScript controlling modal visibility not triggering.
+- **Fix:** Check event bindings for open/close actions in the UI components.
+
+### RSS Feed Empty or Errors
+- **Cause:** Blog content collection query not returning posts.
+- **Fix:** Confirm blog posts exist and are discoverable via Astro's content APIs.
+
+---
+
+## 8. Troubleshooting Build & Deployment Issues
+
+### Build Fails with Adapter Errors
+- Confirm `@astrojs/netlify` is installed and up to date.
+- Verify the `adapter: netlify()` line is configured properly.
+- Clear cache and `node_modules`, then reinstall dependencies.
+
+### sitemap.xml/robots.txt Not Generated
+- Check `astro.config.mjs` for sitemap and robotsTxt integrations.
+- Ensure file outputs are in the correct build directory.
+
+### Deployment Errors on Netlify
+- Confirm environment variables and build commands are correctly set in Netlify UI.
+- View Netlify build logs for precise error messages.
+
+---
+
+## 9. Additional Resources and Next Steps
+
+- Review detailed [Site Configuration Setup](/getting-started/setup-installation/configuration-setup-basics).
+- Consult the [Deployment Guide](/configuration/deployment/deployment-guide) for hosting-specific troubleshooting.
+- Explore [UI Components Guide](/usage/site-navigation/ui-components) if interface elements are problematic.
+- Visit [Customizing Styles](/configuration/styling/customize-styles) for display and layout fixes.
+- Reach out with detailed error logs and reproduction steps if issues persist.
+
+---
+
+## 10. Best Practices for Smooth Setup
+
+- Always restart your development server after configuration changes.
+- Keep your content files organized and frontmatter consistent.
+- Use browser dev tools proactively to catch interface errors early.
+- Validate version compatibility when upgrading dependencies.
+- Adopt progressive complexity: start with a minimal site, then add features step-by-step.
+
+<Tip>
+Regularly back up your configuration files before major edits.
+</Tip>
+
+---
+
+# Summary
+This guide focused on diagnosing and resolving the most common issues faced during setting up and first running the Astro-based portfolio site. Leveraging systematic checks—browser console inspection, configuration verification, component review, and incremental feature toggling—users can quickly regain control and ensure a smooth, successful setup.

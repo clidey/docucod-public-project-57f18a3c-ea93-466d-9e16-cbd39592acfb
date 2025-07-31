@@ -1,0 +1,106 @@
+{
+  "background": {
+    "decoration": "gradient"
+  },
+  "colors": {
+    "dark": "#1E3A8A",
+    "light": "#60A5FA",
+    "primary": "#60A5FA"
+  },
+  "favicon": "/favicon.svg",
+  "fonts": {
+    "family": "Montserrat",
+    "format": "woff2",
+    "source": "https://fonts.gstatic.com/s/googlesansflex/v5/t5sJIQcYNIWbFgDgAAzZ34auoVyXkJCOvp3SFWJbN5hF8Ju1x6sKCyp0l9sI40swNJwGpVd4AZzz0v6lJ4qFXNZhGjLvDSkV4USKMo6qQzwliVdHAy9jxTDHg_ugnAakpwGc-cxgUqDCIUI.woff2"
+  },
+  "icons": {
+    "library": "fontawesome"
+  },
+  "logo": {
+    "dark": "./logo/logo.svg",
+    "light": "./logo/logo.svg"
+  },
+  "name": "portfolio-site",
+  "navigation": {
+    "tabs": [
+      {
+        "groups": [
+          {
+            "group": "Introduction \u0026 Value Proposition",
+            "pages": [
+              "overview/intro-product-value/purpose-positioning",
+              "overview/intro-product-value/target-audience-use-cases"
+            ]
+          },
+          {
+            "group": "Core Concepts \u0026 Feature Overview",
+            "pages": [
+              "overview/core-functionality-concepts/key-features-overview",
+              "overview/core-functionality-concepts/core-concepts-terminology"
+            ]
+          },
+          {
+            "group": "Architecture \u0026 Integration Landscape",
+            "pages": [
+              "overview/architecture-integration/architecture-overview",
+              "overview/architecture-integration/integration-overview"
+            ]
+          }
+        ],
+        "tab": "Overview"
+      },
+      {
+        "groups": [
+          {
+            "group": "Setup \u0026 Installation",
+            "pages": [
+              "getting-started/setup-installation/prerequisites-system-requirements",
+              "getting-started/setup-installation/installing-the-portfolio-site",
+              "getting-started/setup-installation/configuration-setup-basics"
+            ]
+          },
+          {
+            "group": "First Run \u0026 Validation",
+            "pages": [
+              "getting-started/first-run-validation/first-successful-run",
+              "getting-started/first-run-validation/quick-validation-steps",
+              "getting-started/first-run-validation/common-setup-troubleshooting"
+            ]
+          }
+        ],
+        "tab": "Getting Started"
+      },
+      {
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "guides/getting-started/deploy-your-portfolio",
+              "guides/getting-started/configure-site-settings"
+            ]
+          },
+          {
+            "group": "Content Management Workflows",
+            "pages": [
+              "guides/content-management/create-blog-post",
+              "guides/content-management/manage-privacy-policies",
+              "guides/content-management/showcase-projects-and-resume"
+            ]
+          },
+          {
+            "group": "Customization \u0026 Best Practices",
+            "pages": [
+              "guides/customization-best-practices/customize-site-styles",
+              "guides/customization-best-practices/optimize-navigation-and-ui"
+            ]
+          }
+        ],
+        "tab": "Guides"
+      }
+    ]
+  },
+  "styling": {
+    "codeblocks": "dark",
+    "eyebrows": "breadcrumbs"
+  }
+}

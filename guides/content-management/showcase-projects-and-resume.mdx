@@ -1,0 +1,172 @@
+---
+title: "Showcase Your Projects and Resume"
+description: "How to update the core portfolio sections for career highlights: add new projects, update your resume, and make these sections shine to prospective collaborators or employers."
+---
+
+# Showcase Your Projects and Resume
+
+## Overview
+This guide helps you update and manage the core portfolio sections of your site—your projects and your resume. These sections are critical for showcasing your career highlights, skills, and professional journey to prospective collaborators, employers, and visitors. By following this guide, you will learn how to add new projects, update your resume, and present these elements in a way that maximizes impact.
+
+## Prerequisites
+- A working local setup of the portfolio site, as outlined in the [Installing the Portfolio Site](/getting-started/setup-installation/installing-the-portfolio-site) guide.
+- Familiarity with Markdown and basic frontmatter metadata editing.
+- Access to your resume in PDF format for embedding (optional but recommended).
+
+## Expected Outcome
+- New projects added to your portfolio with clear descriptions, technology tags, year, and type.
+- Updated resume embedded or linked from your site.
+- A polished, professional presentation of your career highlights that visitors can easily browse.
+
+## Time Estimate
+Approximately 30–60 minutes to add or update multiple projects and resume.
+
+## Difficulty Level
+Beginner to Intermediate
+
+---
+
+## Step-by-Step Instructions
+
+### 1. Adding or Updating Projects
+Your projects are managed in the `src/pages/projects.astro` file. Each project is displayed with relevant details like title, description, technology tags, year, and type.
+
+#### Steps
+
+1. Open `src/pages/projects.astro` in your code editor.
+2. Locate the section for existing projects. Each project is structured inside a `<div class="box">`.
+3. To add a new project, copy the markup of an existing project box and paste it below the last project.
+4. Update the following fields:
+   - **Title:** Change the `<h3>` element text.
+   - **Links:** Update or add links to GitHub repositories, live websites, reports, or presentations using the existing `<a>` tags with the appropriate icons.
+   - **Tech Tags:** Modify the technology stack tags inside `<span class="tag is-black">` elements.
+   - **Year & Type:** Adjust the year and project type tags for accuracy.
+   - **Description:** Put your detailed project description in the `<p class="projects-list-item-description">` paragraph.
+
+#### Verification
+- Preview locally (`npm run dev` or equivalent) and go to the Projects page.
+- Confirm the new or updated project appears correctly with all links, tags, and description formatted.
+
+### 2. Updating Your Resume
+The resume is embedded or linked from the `src/pages/resume.astro` page.
+
+#### Steps
+
+1. Ensure you have your updated resume in PDF format ready.
+2. Place the PDF file in your `public` directory or another accessible location within the project.
+3. Open `src/pages/resume.astro`.
+4. To embed the PDF inline, check the `div` with ID `resume-content`. This container uses PDFObject to render PDFs dynamically.
+5. Update the PDF source URL if necessary by editing the PDFObject initialization script or the component that loads your PDF.
+6. Alternatively, you can add a direct download or view link to your resume on this page or elsewhere for ease of access.
+
+#### Verification
+- Run the site locally and navigate to the Resume page.
+- Confirm the PDF loads inline or that links to your resume work and open the PDF correctly.
+
+### 3. Best Practices for Project and Resume Presentation
+- Use clear, concise titles and descriptions.
+- Specify project technologies and year clearly to give context.
+- Include links to source code, live demos, reports, or presentations to boost credibility.
+- Keep your resume PDF updated regularly and ensure it’s optimized for web viewing.
+- Avoid clutter; each project should focus on impact and relevance.
+
+---
+
+## Examples
+
+### Sample Project Entry Snippet
+```html
+<div class="box">
+  <div class="block">
+    <div class="content">
+      <h3>Awesome Project Title</h3>
+      <a href="https://github.com/username/awesome-project" target="_blank" referrerpolicy="no-referrer">
+        <span class="icon-text">
+          <span class="icon"><i class="fab fa-github"></i></span>
+          <span>Github Repo</span>
+          <hr />
+        </span>
+      </a>
+      <a href="https://awesomeproject.live" target="_blank" referrerpolicy="no-referrer">
+        <span class="icon-text">
+          <span class="icon"><i class="fas fa-link"></i></span>
+          <span>Live Demo</span>
+          <hr />
+        </span>
+      </a>
+    </div>
+  </div>
+  <div class="block">
+    <div class="field is-grouped is-grouped-multiline">
+      <div class="control">
+        <div class="tags">
+          <span class="tag is-info">Tech:</span>
+          <span class="tag is-black">React.js</span>
+          <span class="tag is-black">Node.js</span>
+          <span class="tag is-black">AWS</span>
+        </div>
+      </div>
+      <div class="control">
+        <div class="tags">
+          <span class="tag is-info">Year:</span>
+          <span class="tag is-black is-outlined">2024</span>
+        </div>
+      </div>
+      <div class="control">
+        <div class="tags">
+          <span class="tag is-info">Type:</span>
+          <span class="tag is-black is-outlined">Personal Project</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="block">
+    <p class="projects-list-item-description">
+      This project is designed to demonstrate how to build a full-stack website using React and AWS. It features user authentication, cloud storage, and a modern UI.
+    </p>
+  </div>
+</div>
+```
+
+### Embedding Resume PDF Snippet (in `resume.astro`)
+```html
+<div id="resume-content"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.3.0/pdfobject.min.js"></script>
+<script>
+  PDFObject.embed('/resume.pdf', '#resume-content');
+</script>
+```
+Replace '/resume.pdf' with the path to your resume PDF file in the `public` folder.
+
+---
+
+## Troubleshooting & Tips
+
+### Common Issues
+- **Project not showing or formatting incorrectly:** Check for missing or incorrectly nested HTML tags in `projects.astro`.
+- **Links not working:** Verify URLs and ensure links open in a new tab (`target="_blank"`).
+- **Resume PDF does not load:** Confirm the PDF path is correct and accessible; check browser console for errors.
+- **Page not updating after changes:** Clear browser cache and restart the development server.
+
+### Best Practices
+- Write meaningful, focused descriptions emphasizing your role and outcomes.
+- Organize your projects chronologically or by relevance.
+- Keep technology tags consistent for easy reader scanning.
+- Regularly maintain your resume and update it in the source folder.
+
+### Performance Considerations
+- Avoid embedding very large PDF files directly to ensure fast loading.
+- Compress resume PDF if necessary.
+- For many projects, consider paginating or grouping by category.
+
+---
+
+## Next Steps & Related Content
+- Visit [Create and Publish a Blog Post](/guides/content-management/create-blog-post) to add content alongside your projects and resume.
+- Customize your site header and footer in the [UI Components](/usage/site-navigation/ui-components) guide to improve navigation.
+- Prepare your site for deployment with the [Deploy Your Portfolio Site](/guides/getting-started/deploy-your-portfolio) guide.
+- For detailed configuration settings, see [Configure Key Site Settings](/guides/getting-started/configure-site-settings).
+
+---
+
+By keeping your projects and resume updated and well-presented, you ensure your portfolio makes a strong, positive impression on visitors and potential collaborators or employers.
