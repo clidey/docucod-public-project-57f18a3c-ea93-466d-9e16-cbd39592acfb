@@ -3,4 +3,235 @@ title: "Customize Site Styles and Branding"
 description: "Practical instructions to change the site’s visual identity: update colors, typography, and layout for a personal touch, leveraging the main CSS and component overrides."
 ---
 
-*This page will automatically be generated from the codebase*
+# Customize Site Styles and Branding
+
+Practical instructions to change the site’s visual identity by updating colors, typography, and layout. This guide helps you personalize your Astro-based portfolio website’s appearance to align with your unique brand or personal preferences, leveraging the main CSS file and component styling overrides.
+
+---
+
+## 1. Why Customize Your Site Styles?
+
+- **Express Your Brand**: Make your site visually unique and reflective of your personal or professional style.
+- **Improve Readability & User Experience**: Tailor fonts and colors for clarity and ease of navigation.
+- **Ensure Consistency Across Pages**: Centralize style changes that apply globally for a polished look.
+- **Support Light & Dark Modes**: Manage theme colors for better accessibility and user comfort.
+
+
+## 2. Understanding the Styling Structure
+
+The portfolio site uses a combination of global CSS variables, scoped component styles, and theme-aware rules:
+
+- **Global CSS Variables:** Defined in `src/styles/main.css`, these variables control primary colors, font families, spacing, and highlights.
+- **Component Scoped Styles:** Local styles in components or pages can add or override base styles.
+- **Theme Support:** Media queries adapt colors and backgrounds for light and dark modes automatically.
+
+The styles are loaded globally by the `<BaseHead />` component on every page, ensuring uniform application.
+
+
+## 3. Before You Begin
+
+### Prerequisites
+
+- Access to the project source files, especially the `src/styles/main.css` file.
+- Basic familiarity with CSS and how selectors apply styles.
+- Development environment to test style changes locally.
+
+### Recommended Tools
+
+- Code editor with CSS syntax highlighting (e.g., VS Code).
+- Local development server running the portfolio site for live-preview.
+
+
+## 4. Step-by-Step Customization Workflow
+
+<Steps>
+<Step title="Locate and Open the Main CSS File">
+The key styles and variables are in `src/styles/main.css`. This file includes the CSS custom properties defining core colors, fonts, and base layout styles. Open this file in your code editor to start customization.
+</Step>
+<Step title="Modify Global CSS Variables for Colors and Fonts">
+Inside `:root`, you will find variables such as `--metal-blue`, `--dark-blue`, `--highlight-color`, and font family declarations. Change these values to update the site's color scheme or typography.
+
+```css
+:root {
+  --metal-blue: #124559;
+  --dark-blue: #0a2e44;
+  --highlight-color: #ff6f61;
+  --font-primary: 'Open Sans', sans-serif;
+  /* ...other variables... */
+}
+```
+
+Adjust color hex codes or font families to your preferences.
+</Step>
+<Step title="Customize Layout and Typography">
+You can add or override CSS rules in the same stylesheet or create new style blocks to:
+
+- Change heading sizes and weights.
+- Adjust paragraph line heights and spacing.
+- Modify container widths or padding for layout tweaks.
+
+Example to make headings larger:
+
+```css
+h1, h2, h3 {
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+h1 {
+  font-size: 2.5rem;
+}
+```
+</Step>
+<Step title="Override Component-Specific Styles">
+If you need fine control over specific UI components (like headers, buttons, or footers), locate their component CSS or define new styles targeting their classes or IDs.
+
+For example, to change the header background color:
+
+```css
+.header {
+  background-color: var(--dark-blue);
+}
+```
+
+Make sure to inspect component markup to use accurate selectors.
+</Step>
+<Step title="Test Dark Mode Compatibility">
+The site supports light and dark themes through media queries. Test your color changes in both modes to ensure accessibility:
+
+```css
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: #121212;
+    --text-color: #e0e0e0;
+    /* ...other dark mode adjustments... */
+  }
+}
+```
+
+Adjust or add variables here to refine dark mode styling.
+</Step>
+<Step title="Preview Your Changes Locally">
+Run your local development server and view your site in a browser. Verify that colors, typography, and layout changes apply correctly and the site remains responsive.
+
+Use browser devtools to inspect elements and tweak CSS live if needed.
+</Step>
+<Step title="Commit and Deploy">
+Once satisfied with your styles, commit your changes to version control and follow your deployment workflow (e.g., using Netlify).
+</Step>
+</Steps>
+
+
+## 5. Practical Examples
+
+### Example 1: Changing Primary Brand Color
+
+In `src/styles/main.css`, update the primary blue tone:
+
+```css
+:root {
+  --metal-blue: #1a73e8; /* New brand blue */
+}
+```
+
+This change will ripple through buttons, links, and highlights using this variable.
+
+---
+
+### Example 2: Custom Font Integration
+
+To use a custom Google Font:
+
+1. Add the font import at the top of `main.css`:
+
+```css
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+```
+
+2. Update the font variable:
+
+```css
+:root {
+  --font-primary: 'Montserrat', sans-serif;
+}
+```
+
+3. Confirm all text uses `var(--font-primary)` in the relevant CSS selectors.
+
+---
+
+### Example 3: Adjusting Heading Sizes for Readability
+
+Add the following to your CSS:
+
+```css
+h1 {
+  font-size: 3rem;
+  font-weight: bold;
+}
+h2 {
+  font-size: 2.25rem;
+}
+```
+
+
+## 6. Best Practices
+
+- **Use CSS Variables:** Always update the CSS variables instead of hard-coded colors to maintain consistency.
+- **Test Responsiveness:** Check your style changes on different screen sizes.
+- **Respect Accessibility:** Ensure sufficient contrast between background and text, especially for links and buttons.
+- **Version Control:** Backup original styles before making major changes.
+
+
+## 7. Common Pitfalls & Troubleshooting
+
+<AccordionGroup title="Troubleshooting Styling Issues">
+<Accordion title="Changes Not Reflecting in Browser">
+
+- Clear your browser cache or use hard refresh (Ctrl+Shift+R).
+- Confirm the CSS file is properly imported via the `<BaseHead />` component.
+- Check for CSS specificity conflicts overriding your rules.
+
+</Accordion>
+<Accordion title="Dark Mode Colors Not Applying">
+
+- Verify `prefers-color-scheme` media query correctness.
+- Ensure you define variables inside the dark mode block.
+- Test on browsers that support dark mode CSS media queries.
+
+</Accordion>
+<Accordion title="Font Not Loading or Displaying Correctly">
+
+- Confirm you imported the font URL correctly.
+- Make sure font-family names match exactly.
+- Check network requests in browser devtools for errors.
+
+</Accordion>
+</AccordionGroup>
+
+<Tip>
+Use browser devtools' CSS inspector to experiment live with style changes before applying them permanently.
+</Tip>
+
+
+## 8. Extending Styles with Component Overrides
+
+If you want to deeply customize components like navigation or footers:
+
+- Look into their source files (e.g., `src/components/Header.astro`).
+- Add scoped styles inside those Astro components or create accompanying `.css` files.
+- Use class names exposed in the markup for targeted styling.
+
+Example: Change header background color by editing or augmenting styles in your header component.
+
+
+## 9. Next Steps & Related Documentation
+
+- **Configure Site Settings:** See [Site Configuration](/guides/getting-started/configure-site-settings) for metadata and deployment tuning.
+- **UI Components:** Customize interactive elements via [UI Components](/usage/site-navigation/ui-components).
+- **Deploy Your Portfolio:** Follow [Deployment Guide](/guides/getting-started/deploy-your-portfolio) to publish style updates.
+- **Create and Publish Blog Posts:** Add new content to see style rules in different contexts with [Create and Publish a Blog Post](/guides/content-management/create-blog-post).
+
+
+The 'Customize Site Styles and Branding' guide positions you to control your portfolio site's visual identity confidently, delivering a professional and personalized online presence.
+
+---
